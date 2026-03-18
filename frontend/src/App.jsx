@@ -220,6 +220,7 @@ const SNIPPET_STYLES = {
 function GlobalFloatingCode() {
   return (
     <div
+      className="floating-code-layer"
       style={{
         position: "fixed",
         inset: 0,
@@ -514,18 +515,23 @@ export default function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [scramble, setScramble] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      if (menuOpen) setMenuOpen(false);
+    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [menuOpen]);
 
   useEffect(() => {
     setTimeout(() => setScramble(true), 500);
   }, []);
 
   const scrollTo = (id) => {
+    setMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -571,6 +577,10 @@ export default function Portfolio() {
           75%  { transform: translateY(-8px)  translateX(7px);  }
           100% { transform: translateY(0px)   translateX(0px);  }
         }
+        @keyframes menuSlide {
+          from { opacity: 0; transform: translateY(-8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
 
         .fade-up { animation: fadeUp 0.7s ease both; }
         .fade-up-1 { animation-delay: 0.1s; }
@@ -585,14 +595,19 @@ export default function Portfolio() {
           margin-bottom: 48px;
           letter-spacing: -0.02em;
         }
-        .section-title span {
-          color: #a78bfa;
-        }
+        .section-title span { color: #a78bfa; }
 
         .grid-3 {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
           gap: 16px;
+        }
+
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 64px;
+          align-items: start;
         }
 
         .btn-primary {
@@ -610,11 +625,10 @@ export default function Portfolio() {
           cursor: pointer;
           transition: all 0.2s;
           text-decoration: none;
+          white-space: nowrap;
         }
-        .btn-primary:hover {
-          background: #c4b5fd;
-          transform: translateY(-1px);
-        }
+        .btn-primary:hover { background: #c4b5fd; transform: translateY(-1px); }
+
         .btn-ghost {
           display: inline-flex;
           align-items: center;
@@ -630,11 +644,90 @@ export default function Portfolio() {
           cursor: pointer;
           transition: all 0.2s;
           text-decoration: none;
+          white-space: nowrap;
         }
-        .btn-ghost:hover {
-          border-color: rgba(167,139,250,0.4);
-          color: #a78bfa;
-          transform: translateY(-1px);
+        .btn-ghost:hover { border-color: rgba(167,139,250,0.4); color: #a78bfa; transform: translateY(-1px); }
+
+        .nav-links-desktop { display: flex; align-items: center; gap: 32px; }
+        .hamburger { display: none; }
+        .mobile-menu { display: none; }
+        .floating-code-layer { display: block; }
+
+        @media (max-width: 768px) {
+          .nav-links-desktop { display: none; }
+          .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+          }
+          .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 2px;
+            transition: all 0.3s;
+          }
+          .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+          .hamburger.open span:nth-child(2) { opacity: 0; }
+          .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+          .mobile-menu {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            background: rgba(5,5,8,0.97);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 20px 24px 28px;
+            gap: 4px;
+            z-index: 99;
+            animation: menuSlide 0.2s ease;
+          }
+          .mobile-menu.hidden { display: none; }
+          .mobile-menu a, .mobile-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 16px;
+            font-family: 'Cabinet Grotesk', sans-serif;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            cursor: pointer;
+            text-decoration: none;
+          }
+          .mobile-menu a:last-child, .mobile-menu button:last-child { border-bottom: none; }
+
+          .about-grid { grid-template-columns: 1fr; gap: 40px; }
+          .grid-3 { grid-template-columns: 1fr; }
+
+          .section-title { margin-bottom: 28px; }
+
+          .floating-code-layer { display: none; }
+
+          .hero-social-label { display: none; }
+          .hero-social-short { display: inline !important; }
+        }
+
+        @media (max-width: 480px) {
+          .btn-primary, .btn-ghost { width: 100%; justify-content: center; font-size: 13px; }
+          .hero-buttons { flex-direction: column; align-items: stretch; }
+          .social-strip { flex-wrap: wrap; gap: 14px !important; justify-content: center; }
+          .testimonials-grid { grid-template-columns: 1fr !important; }
+          .stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
 
@@ -654,11 +747,11 @@ export default function Portfolio() {
           justifyContent: "space-between",
           padding: "0 clamp(20px, 5vw, 80px)",
           height: 64,
-          background: scrolled
-            ? "rgba(5,5,8,0.85)"
+          background: scrolled || menuOpen
+            ? "rgba(5,5,8,0.95)"
             : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled
+          backdropFilter: scrolled || menuOpen ? "blur(20px)" : "none",
+          borderBottom: scrolled || menuOpen
             ? "1px solid rgba(255,255,255,0.06)"
             : "none",
           transition: "all 0.3s ease",
@@ -680,7 +773,8 @@ export default function Portfolio() {
           koded<span style={{ color: "#a78bfa" }}>.</span>
         </button>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+        {/* Desktop links */}
+        <div className="nav-links-desktop">
           {navItems.map((n) => (
             <button
               key={n.id}
@@ -696,9 +790,7 @@ export default function Portfolio() {
                 transition: "color 0.2s",
               }}
               onMouseEnter={(e) => (e.target.style.color = "#fff")}
-              onMouseLeave={(e) =>
-                (e.target.style.color = "rgba(255,255,255,0.6)")
-              }
+              onMouseLeave={(e) => (e.target.style.color = "rgba(255,255,255,0.6)")}
             >
               {n.label}
             </button>
@@ -713,7 +805,34 @@ export default function Portfolio() {
             GitHub ↗
           </a>
         </div>
+
+        {/* Hamburger */}
+        <button
+          className={`hamburger${menuOpen ? " open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span /><span /><span />
+        </button>
       </nav>
+
+      {/* Mobile Menu */}
+      <div className={`mobile-menu${menuOpen ? "" : " hidden"}`}>
+        {navItems.map((n) => (
+          <button key={n.id} onClick={() => scrollTo(n.id)}>
+            {n.label}
+          </button>
+        ))}
+        <a
+          href="https://github.com/Koded0214h"
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: "#a78bfa" }}
+          onClick={() => setMenuOpen(false)}
+        >
+          GitHub ↗
+        </a>
+      </div>
 
       {/* ─── HERO ─────────────────────────────────────────────── */}
       <section
@@ -803,7 +922,7 @@ export default function Portfolio() {
                 letterSpacing: "0.08em",
               }}
             >
-              Available for work
+              Available for work · Lagos, Nigeria
             </span>
           </div>
 
@@ -843,17 +962,16 @@ export default function Portfolio() {
               fontSize: "clamp(15px, 2vw, 17px)",
               color: "rgba(255,255,255,0.45)",
               lineHeight: 1.75,
-              maxWidth: 500,
+              maxWidth: 540,
               margin: "0 auto 40px",
-              padding: "30px",
             }}
           >
-            Building intelligent, scalable systems
-            from AI-powered platforms to production-ready SaaS.
+            Building intelligent, scalable systems — from AI-powered platforms
+            to production-ready SaaS. Based in Lagos.
           </p>
 
           <div
-            className="fade-up fade-up-4"
+            className="fade-up fade-up-4 hero-buttons"
             style={{
               display: "flex",
               gap: 14,
@@ -871,7 +989,7 @@ export default function Portfolio() {
 
           {/* Social strip */}
           <div
-            className="fade-up fade-up-4"
+            className="fade-up fade-up-4 social-strip"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -880,13 +998,10 @@ export default function Portfolio() {
             }}
           >
             {[
-              { label: "GitHub", href: "https://github.com/Koded0214h" },
-              {
-                label: "LinkedIn",
-                href: "https://www.linkedin.com/in/koded0214h",
-              },
-              { label: "X / Twitter", href: "https://x.com/coder0214h" },
-              { label: "WhatsApp", href: "https://wa.me/+2347030057130" },
+              { label: "GitHub",      short: "GH",  href: "https://github.com/Koded0214h" },
+              { label: "LinkedIn",    short: "LI",  href: "https://www.linkedin.com/in/koded0214h" },
+              { label: "X / Twitter", short: "X",   href: "https://x.com/coder0214h" },
+              { label: "WhatsApp",    short: "WA",  href: "https://wa.me/+2347030057130" },
             ].map((s) => (
               <a
                 key={s.label}
@@ -908,7 +1023,8 @@ export default function Portfolio() {
                   (e.currentTarget.style.color = "rgba(255,255,255,0.35)")
                 }
               >
-                {s.label}
+                <span className="hero-social-label">{s.label}</span>
+                <span style={{ display: "none" }} className="hero-social-short">{s.short}</span>
               </a>
             ))}
           </div>
@@ -988,21 +1104,14 @@ export default function Portfolio() {
       <section
         id="about"
         style={{
-          padding: "100px clamp(20px, 8vw, 120px)",
+          padding: "clamp(60px,10vw,100px) clamp(20px, 8vw, 120px)",
           maxWidth: 1200,
           margin: "0 auto",
           position: "relative",
           zIndex: 1,
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 64,
-            alignItems: "start",
-          }}
-        >
+        <div className="about-grid">
           <div>
             <p
               style={{
@@ -1060,6 +1169,7 @@ export default function Portfolio() {
           <div>
             {/* Stats */}
             <div
+              className="stats-grid"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
@@ -1135,7 +1245,7 @@ export default function Portfolio() {
                     marginBottom: 2,
                   }}
                 >
-                  Fullstack Developer @ Skurel LLC
+                  Fullstack Developer @ SearchLabs
                 </div>
                 <div
                   style={{
@@ -1156,7 +1266,7 @@ export default function Portfolio() {
       <section
         id="projects"
         style={{
-          padding: "100px clamp(20px, 8vw, 120px)",
+          padding: "clamp(60px,10vw,100px) clamp(20px, 8vw, 120px)",
           background: "rgba(255,255,255,0.015)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
           position: "relative",
@@ -1213,7 +1323,7 @@ export default function Portfolio() {
       {/* ─── TESTIMONIALS ───────────────────────────────────── */}
       <section
         style={{
-          padding: "100px clamp(20px, 8vw, 120px)",
+          padding: "clamp(60px,10vw,100px) clamp(20px, 8vw, 120px)",
           maxWidth: 1200,
           margin: "0 auto",
           position: "relative",
@@ -1236,6 +1346,7 @@ export default function Portfolio() {
           What people <span>say</span>
         </h2>
         <div
+          className="testimonials-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
@@ -1308,7 +1419,7 @@ export default function Portfolio() {
       <section
         id="contact"
         style={{
-          padding: "100px clamp(20px, 8vw, 120px) 120px",
+          padding: "clamp(60px,10vw,100px) clamp(20px, 8vw, 120px) clamp(60px,10vw,120px)",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
@@ -1370,6 +1481,7 @@ export default function Portfolio() {
             projects.
           </p>
           <div
+            className="hero-buttons"
             style={{
               display: "flex",
               gap: 14,
@@ -1425,7 +1537,7 @@ export default function Portfolio() {
             color: "rgba(255,255,255,0.25)",
           }}
         >
-          koded<span style={{ color: "#a78bfa" }}>.</span> © 2026
+          koded<span style={{ color: "#a78bfa" }}>.</span> © 2025
         </span>
         <span
           style={{

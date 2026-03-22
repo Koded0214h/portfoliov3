@@ -159,7 +159,7 @@ function CyclingRole() {
     <span
       style={{
         display: "inline-block",
-        color: "#a78bfa",
+        color: "#3fa945",
         fontFamily: "'DM Mono', monospace",
         transition: "opacity 0.3s, transform 0.3s",
         opacity: show ? 1 : 0,
@@ -211,7 +211,7 @@ const ALL_SNIPPETS = [
 ];
 
 const SNIPPET_STYLES = {
-  purple: { color: "rgba(167,139,250,0.18)", bg: "rgba(167,139,250,0.03)",  border: "rgba(167,139,250,0.07)" },
+  purple: { color: "rgba(63,169,69,0.18)", bg: "rgba(63,169,69,0.03)",  border: "rgba(63,169,69,0.07)" },
   green:  { color: "rgba(52,211,153,0.15)",  bg: "rgba(52,211,153,0.02)",   border: "rgba(52,211,153,0.06)"  },
   blue:   { color: "rgba(96,165,250,0.15)",  bg: "rgba(96,165,250,0.02)",   border: "rgba(96,165,250,0.06)"  },
   dim:    { color: "rgba(255,255,255,0.09)", bg: "transparent",             border: "rgba(255,255,255,0.04)" },
@@ -268,10 +268,10 @@ function ProjectCard({ project, idx }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered
-          ? "rgba(167,139,250,0.08)"
+          ? "rgba(63,169,69,0.08)"
           : "rgba(255,255,255,0.03)",
         border: hovered
-          ? "1px solid rgba(167,139,250,0.4)"
+          ? "1px solid rgba(63,169,69,0.4)"
           : "1px solid rgba(255,255,255,0.08)",
         borderRadius: 16,
         padding: "28px 24px",
@@ -292,11 +292,11 @@ function ProjectCard({ project, idx }) {
           style={{
             fontSize: 11,
             fontFamily: "'DM Mono', monospace",
-            color: "#a78bfa",
+            color: "#3fa945",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
             padding: "3px 10px",
-            border: "1px solid rgba(167,139,250,0.3)",
+            border: "1px solid rgba(63,169,69,0.3)",
             borderRadius: 99,
           }}
         >
@@ -368,15 +368,15 @@ function ProjectCard({ project, idx }) {
           rel="noreferrer"
           style={{
             fontSize: 13,
-            color: "#a78bfa",
+            color: "#3fa945",
             textDecoration: "none",
             padding: "6px 16px",
-            border: "1px solid rgba(167,139,250,0.4)",
+            border: "1px solid rgba(63,169,69,0.4)",
             borderRadius: 8,
             transition: "all 0.2s",
             fontFamily: "'DM Mono', monospace",
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = "rgba(167,139,250,0.12)"; }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(63,169,69,0.12)"; }}
           onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
         >
           ↗ Demo
@@ -552,7 +552,7 @@ export default function Portfolio() {
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #050508; }
-        ::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.4); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb { background: rgba(63,169,69,0.4); border-radius: 99px; }
 
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(24px); }
@@ -595,7 +595,7 @@ export default function Portfolio() {
           margin-bottom: 48px;
           letter-spacing: -0.02em;
         }
-        .section-title span { color: #a78bfa; }
+        .section-title span { color: #3fa945; }
 
         .grid-3 {
           display: grid;
@@ -615,7 +615,7 @@ export default function Portfolio() {
           align-items: center;
           gap: 8px;
           padding: 12px 28px;
-          background: #a78bfa;
+          background: #3fa945;
           color: #050508;
           border: none;
           border-radius: 10px;
@@ -627,7 +627,7 @@ export default function Portfolio() {
           text-decoration: none;
           white-space: nowrap;
         }
-        .btn-primary:hover { background: #c4b5fd; transform: translateY(-1px); }
+        .btn-primary:hover { background: #5cb85c; transform: translateY(-1px); }
 
         .btn-ghost {
           display: inline-flex;
@@ -646,7 +646,7 @@ export default function Portfolio() {
           text-decoration: none;
           white-space: nowrap;
         }
-        .btn-ghost:hover { border-color: rgba(167,139,250,0.4); color: #a78bfa; transform: translateY(-1px); }
+        .btn-ghost:hover { border-color: rgba(63,169,69,0.4); color: #3fa945; transform: translateY(-1px); }
 
         .nav-links-desktop { display: flex; align-items: center; gap: 32px; }
         .hamburger { display: none; }
@@ -716,7 +716,12 @@ export default function Portfolio() {
 
           .section-title { margin-bottom: 28px; }
 
-          .floating-code-layer { display: none; }
+          /* Adjust floating snippets for mobile */
+          .floating-code-layer div {
+            font-size: 8px !important;
+            padding: 2px 6px !important;
+            opacity: 0.7;
+          }
 
           .hero-social-label { display: none; }
           .hero-social-short { display: inline !important; }
@@ -770,7 +775,7 @@ export default function Portfolio() {
             letterSpacing: "0.05em",
           }}
         >
-          koded<span style={{ color: "#a78bfa" }}>.</span>
+          koded<span style={{ color: "#3fa945" }}>.</span>
         </button>
 
         {/* Desktop links */}
@@ -827,7 +832,7 @@ export default function Portfolio() {
           href="https://github.com/Koded0214h"
           target="_blank"
           rel="noreferrer"
-          style={{ color: "#a78bfa" }}
+          style={{ color: "#3fa945" }}
           onClick={() => setMenuOpen(false)}
         >
           GitHub ↗
@@ -853,17 +858,17 @@ export default function Portfolio() {
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(109,40,217,0.18) 0%, transparent 70%)",
+              "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(63,169,69,0.18) 0%, transparent 70%)",
           }}
         />
 
         {/* Grid scan */}
         <GridScan
-          lineColor="rgba(167,139,250,0.7)"
+          lineColor="rgba(63,169,69,0.7)"
           cellSize={55}
           opacity={0.12}
           speed={1.8}
-          scanColor="rgba(167,139,250,0.5)"
+          scanColor="rgba(63,169,69,0.5)"
         />
 
         {/* Content */}
@@ -1017,7 +1022,7 @@ export default function Portfolio() {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "rgba(167,139,250,0.9)")
+                  (e.currentTarget.style.color = "rgba(63,169,69,0.9)")
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.color = "rgba(255,255,255,0.35)")
@@ -1089,7 +1094,7 @@ export default function Portfolio() {
               <span
                 style={{
                   marginLeft: 40,
-                  color: "rgba(167,139,250,0.4)",
+                  color: "rgba(63,169,69,0.4)",
                   fontSize: 8,
                 }}
               >
@@ -1117,7 +1122,7 @@ export default function Portfolio() {
               style={{
                 fontSize: 12,
                 fontFamily: "'DM Mono', monospace",
-                color: "#a78bfa",
+                color: "#3fa945",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 marginBottom: 16,
@@ -1136,7 +1141,7 @@ export default function Portfolio() {
             >
               Full-stack engineer
               <br />
-              <span style={{ color: "#a78bfa" }}>obsessed with AI.</span>
+              <span style={{ color: "#3fa945" }}>obsessed with AI.</span>
             </h2>
             <p
               style={{
@@ -1159,7 +1164,7 @@ export default function Portfolio() {
                 fontSize: 15,
               }}
             >
-              Founder of <strong style={{ color: "#a78bfa" }}>SCAFLD</strong> —
+              Founder of <strong style={{ color: "#3fa945" }}>SCAFLD</strong> —
               a backend scaffolding engine. I collaborate with startups and
               teams to architect backend infrastructure, integrate AI, and ship
               production-ready features fast.
@@ -1196,7 +1201,7 @@ export default function Portfolio() {
                     style={{
                       fontSize: 28,
                       fontWeight: 800,
-                      color: "#a78bfa",
+                      color: "#3fa945",
                       letterSpacing: "-0.02em",
                       marginBottom: 4,
                     }}
@@ -1219,9 +1224,9 @@ export default function Portfolio() {
             <div
               style={{
                 padding: "18px 20px",
-                border: "1px solid rgba(167,139,250,0.2)",
+                border: "1px solid rgba(63,169,69,0.2)",
                 borderRadius: 12,
-                background: "rgba(167,139,250,0.05)",
+                background: "rgba(63,169,69,0.05)",
                 display: "flex",
                 alignItems: "center",
                 gap: 14,
@@ -1278,7 +1283,7 @@ export default function Portfolio() {
             style={{
               fontSize: 12,
               fontFamily: "'DM Mono', monospace",
-              color: "#a78bfa",
+              color: "#3fa945",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               marginBottom: 12,
@@ -1334,7 +1339,7 @@ export default function Portfolio() {
           style={{
             fontSize: 12,
             fontFamily: "'DM Mono', monospace",
-            color: "#a78bfa",
+            color: "#3fa945",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
             marginBottom: 12,
@@ -1381,7 +1386,7 @@ export default function Portfolio() {
                     height: 38,
                     borderRadius: "50%",
                     background:
-                      "linear-gradient(135deg, #7c3aed, #a78bfa)",
+                      "linear-gradient(135deg, #2e7d32, #3fa945)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1432,22 +1437,22 @@ export default function Portfolio() {
             position: "absolute",
             inset: 0,
             background:
-              "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(109,40,217,0.15), transparent)",
+              "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(63,169,69,0.15), transparent)",
           }}
         />
         <GridScan
-          lineColor="rgba(167,139,250,0.5)"
+          lineColor="rgba(63,169,69,0.5)"
           cellSize={50}
           opacity={0.07}
           speed={1.4}
-          scanColor="rgba(167,139,250,0.3)"
+          scanColor="rgba(63,169,69,0.3)"
         />
         <div style={{ position: "relative", zIndex: 2 }}>
           <p
             style={{
               fontSize: 12,
               fontFamily: "'DM Mono', monospace",
-              color: "#a78bfa",
+              color: "#3fa945",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               marginBottom: 20,
@@ -1466,7 +1471,7 @@ export default function Portfolio() {
           >
             Let's build something
             <br />
-            <span style={{ color: "#a78bfa" }}>together.</span>
+            <span style={{ color: "#3fa945" }}>together.</span>
           </h2>
           <p
             style={{
@@ -1537,7 +1542,7 @@ export default function Portfolio() {
             color: "rgba(255,255,255,0.25)",
           }}
         >
-          koded<span style={{ color: "#a78bfa" }}>.</span> © 2025
+          koded<span style={{ color: "#3fa945" }}>.</span> © 2025
         </span>
         <span
           style={{
